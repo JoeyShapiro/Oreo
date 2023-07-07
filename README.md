@@ -31,7 +31,11 @@ should use different functions, more organized, but break up and share what i ca
 because each one has its own way of forming links. just try
 
 https://dev.twitch.tv/docs/cli/event-command/
+https://dev.twitch.tv/docs/api/reference/
 
 and need a bot for custom messages
 
 add "subscription system
+
+ADD files to docker when im done. more standard, shouldnt need to modify, give image only or something. at least stick
+have dockeer file on docker hub. they dont need src anymore
