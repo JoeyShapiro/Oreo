@@ -1,8 +1,14 @@
 from flask import Flask, render_template, request
 import sys
 import requests
+import sqlite3 # using this because its all i need, and want to try new stuff
+import json
 
 app = Flask(__name__)
+secrets = {}
+with open('secrets.json') as f:
+    secrets = json.loads(f.read())
+webhook_url = secrets['webhookUrl']
 
 @app.route("/")
 def index():
