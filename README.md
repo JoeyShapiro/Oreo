@@ -10,3 +10,24 @@
 >     Squash is taken<br>
 >     Is oero a vegi<br>
 > ponyboi: Yes<br>
+
+discord bot to deal with adding new stuff
+done by users
+can make custom messages with variables
+cant just have webhook, need bot to
+maybe use both, at first
+
+add the discord server to bot and db. how does webhook handle it.
+needs its own hook. so hook is in db too
+
+so maybe have bot send message, but later
+
+will need to be bot to maybe delete messages
+make another table for server/channels
+channel name and stuff cannot be unique, multiple servers might request that channel
+
+maybe one call for everything, we will see. but twitch needs it this way
+should use different functions, more organized, but break up and share what i can
+because each one has its own way of forming links. just try
+
+https://dev.twitch.tv/docs/cli/event-command/

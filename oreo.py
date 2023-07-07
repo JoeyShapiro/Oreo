@@ -17,15 +17,31 @@ def index():
 @app.route("/eventstreamup", methods=['POST'])
 def event_streamup():
     data = request.json # type: ignore
-    print(data, file=sys.stdout)
 
-    message = {
-        "content": f'{data["event"]["broadcaster_user_name"]} just went live'
-    }
+    channel = data["event"]["broadcaster_user_name"]
+    conn = sqlite3.connect('oreo.sqlite')
 
-    print(message, file=sys.stdout)
+    c = conn.cursor()
+    c.execute(f'SELECT channel, message, p.name FROM hooks INNER JOIN platforms p on hooks.platform_id = p.id WHERE channel = "{channel}"')
 
-    requests.post(webhook_url, json=message)
+    # fetch the results
+    results = c.fetchall()
+
+    # print the results
+    for row in results:
+        msg = row[1]
+        msg = msg.replace('{channel}', row[0]).replace('{platform}', row[2])
+        msg = msg.replace('{link}', f'https://twitch.tv/{channel}')
+
+        discord_message = {
+            "content": msg
+        }
+
+        print(f'telling {{server}} that "{msg}"')
+        requests.post(webhook_url, json=discord_message)
+
+    # close the connection
+    conn.close()
 
     return '{"msg": "hello"}'
 
