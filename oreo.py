@@ -7,7 +7,7 @@ import json
 app = Flask(__name__)
 secrets = {}
 with open('secrets.json') as f:
-    secrets = json.loads(f.read())
+    secrets = json.load(f)
 webhook_url = secrets['webhookUrl']
 
 @app.route("/")
