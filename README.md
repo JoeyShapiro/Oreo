@@ -31,3 +31,7 @@ should use different functions, more organized, but break up and share what i ca
 because each one has its own way of forming links. just try
 
 https://dev.twitch.tv/docs/cli/event-command/
+
+and need a bot for custom messages
+
+add "subscription system
