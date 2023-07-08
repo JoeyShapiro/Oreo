@@ -1,1 +1,8 @@
+# all my secrets
 secrets.json
+
+# ssl stuff
+*.crt
+*.csr
+*.key
+*.key.org

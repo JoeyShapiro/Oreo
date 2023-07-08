@@ -39,3 +39,7 @@ add "subscription system
 
 ADD files to docker when im done. more standard, shouldnt need to modify, give image only or something. at least stick
 have dockeer file on docker hub. they dont need src anymore
+https://letsencrypt.org/
+
+maybe get steam info from discord, how does pingbot do it.
+ill just do it my own way

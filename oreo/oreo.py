@@ -65,4 +65,6 @@ def event_streamdown():
     return '{"msg": "tysm"}'
 
 if __name__ == "__main__":
+    # context = ('server.crt', 'server.key')
+    # app.run(debug=True, host="0.0.0.0", port=443, ssl_context=context)
     app.run(debug=True, host="0.0.0.0", port=8080)
