@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-from twitch import get_auth, get_stream
 from twitch import hook_channel as twitch_hook_channel
 from webhooks import stream_up
 import sys
@@ -67,6 +66,7 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     
     # check if it worked
     if result['id'] is None:
+        print(result, file=sys.stdout)
         return { 'error': 'failed to create webhook' }
     
     # insert into sqlite database
@@ -88,5 +88,4 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
 if __name__ == "__main__":
     # context = ('server.crt', 'server.key')
     # app.run(debug=True, host="0.0.0.0", port=443, ssl_context=context)
-    watch_channel('yoeyshapiro', 'twitch', '{channel} is prolly doing some nerdy stuff on {game} right now. {title} ...i was right. Go check them out at {link}', 'yoeyshapiro')
     app.run(debug=True, host="0.0.0.0", port=8080)
