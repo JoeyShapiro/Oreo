@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
     # simple use, check if it should be running in debug mode
     # using secrets.json is better
-    if sys.argv[1] == "ssl":
+    if sys.argv[2] == "ssl":
         context = (secrets['ssl']['crt'], secrets['ssl']['key'])
         app.run(debug=True, host="0.0.0.0", port=443, ssl_context=context)
     else:
