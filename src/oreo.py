@@ -58,6 +58,7 @@ def event_sub():
     if data == None:
         data = {}
 
+    print(f'got event sub request {data}', file=log_file)
     resp = make_response(data['challenge'])
     resp.headers['Content-Type'] = 'text/plain'
 
