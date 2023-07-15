@@ -35,6 +35,20 @@ def get_channel_id(username: str, bearer_token: str, client_id: str) -> int:
     res = requests.get(url, headers=headers)
     return res.json()['data'][0]['id']
 
+def get_subs(bearer_token: str, client_id: str):
+    """
+    returns a list of currently subscribed hooks from the twitch api
+    """
+
+    url = 'https://api.twitch.tv/helix/eventsub/subscriptions'
+    headers = {
+        'Authorization': f'Bearer {bearer_token}',
+        'Client-Id': client_id
+    }
+
+    res = requests.get(url, headers=headers)
+    return res.json()
+
 def event_sub(callback, secrets, broadcaster_id):
     """
     Subscribe to an api webhook from twitch api
@@ -81,5 +95,8 @@ def hook_channel(callback: str, username: str, secrets):
         return { 'error': 'invalid username' }
 
     data = event_sub(callback, secrets, broadcaster_id)
+
+    # TODO check if failure 'data.0.status'
+    print(data)
 
     return { 'id': data['data'][0]['id'] } or data

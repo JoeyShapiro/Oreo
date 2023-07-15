@@ -48,3 +48,5 @@ ill just do it my own way
 [manage subs](https://dev.twitch.tv/docs/eventsub/manage-subscriptions/)
 
 should close port, but dont need to. later close and use docker port
+
+im still not happy with the secrets importing layout. maybe ask around

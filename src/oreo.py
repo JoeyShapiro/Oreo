@@ -11,7 +11,7 @@ CALLBACK = "https://thegreenhouse.dev/oreo"
 
 app = Flask(__name__)
 secrets = {}
-with open('/mnt/data/secrets.json') as f:
+with open('../data/secrets.json') as f:
     secrets = json.load(f)
 
 @app.route("/")
@@ -86,11 +86,7 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     return { 'id': results[0][0] }
 
 if __name__ == "__main__":
+    
     # simple use, check if it should be running in debug mode
     # using secrets.json is better
-    if secrets['ssl']['key'] == '' or secrets['ssl']['crt'] == '':
-        app.run(debug=True, host="0.0.0.0", port=8080)
-    else:
-        # TODO need a better WSGI
-        context = (f'/mnt/certs/{secrets["ssl"]["crt"]}', f'/mnt/certs/{secrets["ssl"]["key"]}')
-        app.run(debug=False, host="0.0.0.0", port=443, ssl_context=context)
+    app.run(debug=True, host="0.0.0.0", port=8080)

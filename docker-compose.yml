@@ -6,4 +6,3 @@ services:
       - 8080:8080
     volumes:
       - ./data:/mnt/data:ro
-      - ${CERTS:?missing certs folder in .env}:/mnt/certs:ro
