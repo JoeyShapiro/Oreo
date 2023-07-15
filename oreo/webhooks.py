@@ -1,5 +1,6 @@
 from twitch import get_auth, get_stream
 import sqlite3 # using this because its all i need, and want to try new stuff
+import requests
 
 def stream_up(data, secrets) -> str:
     channel = data["event"]["broadcaster_user_name"]
@@ -35,3 +36,36 @@ def stream_up(data, secrets) -> str:
     conn.close()
 
     return msg
+
+def event_sub(callback, secrets, broadcaster_id):
+    """
+    Subscribe to an api webhook from twitch api
+    """
+
+    # get the auth token
+    auth = get_auth(secrets['twitch']['client_id'], secrets['twitch']['client_secret'])
+
+    # set up the headers
+    headers = {
+        'Client-ID': secrets['twitch']['client_id'],
+        'Authorization': f'Bearer {auth["access_token"]}'
+    }
+
+    # set up the data
+    data = {
+        'type': 'stream.online',
+        'version': '2',
+        'condition': {
+            'broadcaster_user_id': broadcaster_id
+        },
+        "transport": {
+            "method": "webhook",
+            "callback": callback,
+            "secret": secrets['twitch']['client_secret']
+        }
+    }
+
+    # send the request to the api, and get the response
+    response = requests.post("https://api.twitch.tv/helix/eventsub/subscriptions", json=data, headers=headers)
+
+    return response.json()
