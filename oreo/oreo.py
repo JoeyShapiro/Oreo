@@ -90,6 +90,6 @@ if __name__ == "__main__":
     if len(sys.argv) == 1:
         app.run(debug=True, host="0.0.0.0", port=8080)
     else:
-        from waitress import serve
+        # TODO need a better WSGI
         context = (f'{sys.argv[1]}/server.crt', f'{sys.argv[1]}/server.key')
-        serve(app, host="0.0.0.0", port=8080, ssl_context=context)
+        app.run(debug=False, host="0.0.0.0", port=443, ssl_context=context)
