@@ -6,4 +6,7 @@ secrets.json
 *.csr
 *.key
 *.key.org
+
+# user defined stuff
 __pycache__
+.env
