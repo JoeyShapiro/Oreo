@@ -65,6 +65,7 @@ def event_sub():
 
     return resp
 
+# TODO move this to another areal. or move api stuff to app.py
 def watch_channel(username: str, platform: str, message: str, creator: str):
     """
     Will create a webhook for the channel as long as it is supported.
@@ -106,11 +107,15 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
 
 if __name__ == "__main__":
     # watch_channel("yoeyshapiro", "twitch", "{channel} is prolly doing some nerdy stuff on {game} right now. {title} ...i was right. Go check them out at {link}", "yoeyshapiro")
-    
-    # from twitch import get_subs, get_auth
-    # auth = get_auth(secrets['twitch']['client_id'], secrets['twitch']['client_secret'])
-    # print(get_subs(auth['access_token'], secrets['twitch']['client_id']))
-    
+
+    from twitch import get_subs, get_auth
+    auth = get_auth(secrets['twitch']['client_id'], secrets['twitch']['client_secret'])
+    print(get_subs(auth['access_token'], secrets['twitch']['client_id']))
+
     # simple use, check if it should be running in debug mode
     # using secrets.json is better
-    app.run(debug=True, host="0.0.0.0", port=8080)
+    if sys.argv[1] == "ssl":
+        context = (secrets['ssl']['crt'], secrets['ssl']['key'])
+        app.run(debug=True, host="0.0.0.0", port=443, ssl_context=context)
+    else:
+        app.run(debug=True, host="0.0.0.0", port=8080)
