@@ -8,6 +8,7 @@ import multiprocessing
 import sqlite3
 
 CALLBACK = "https://thegreenhouse.dev/oreo"
+log_file = sys.stdout#open('oreo.log', 'a')
 
 app = Flask(__name__)
 secrets = {}
@@ -41,25 +42,26 @@ def do_streamup(data):
         "content": msg
     }
 
-    print(f'telling {{server}} that "{msg}"', file=sys.stdout)
+    print(f'telling {{server}} that "{msg}"', file=log_file)
     requests.post(secrets['webhookUrl'], json=discord_message)
 
 @app.route("/oreo/eventstreamdown", methods=['POST'])
 def event_streamdown():
     data = request.json # type: ignore
-    print(data, file=sys.stdout)
+    print(data, file=log_file)
     return '{"msg": "tysm"}'
 
 @app.route("/oreo/eventsub", methods=['POST'])
 def event_sub():
     data = request.json # type: ignore
-    print(data, file=sys.stdout)
     # fixes an annoying linting null check error
     if data == None:
         data = {}
 
     resp = make_response(data['challenge'])
     resp.headers['Content-Type'] = 'text/plain'
+
+    print(f'responding to challenge {data}', file=log_file)
 
     return resp
 
@@ -83,7 +85,7 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     
     # check if it worked
     if result['id'] is None:
-        print(result, file=sys.stdout)
+        print(result, file=log_file)
         return { 'error': 'failed to create webhook' }
     
     # insert into sqlite database
