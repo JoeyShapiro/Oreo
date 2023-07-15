@@ -5,4 +5,5 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./oreo:/mnt/oreo:rw
+      - ./data:/mnt/data:ro
+      - ${CERTS:?missing certs folder in .env}:/mnt/certs:ro

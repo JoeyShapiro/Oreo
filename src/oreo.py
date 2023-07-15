@@ -92,5 +92,5 @@ if __name__ == "__main__":
         app.run(debug=True, host="0.0.0.0", port=8080)
     else:
         # TODO need a better WSGI
-        context = (secrets["ssl"]['crt'], secrets["ssl"]['key'])
+        context = (f'/mnt/certs/{secrets["ssl"]["crt"]}', f'/mnt/certs/{secrets["ssl"]["key"]}')
         app.run(debug=False, host="0.0.0.0", port=443, ssl_context=context)
