@@ -43,3 +43,8 @@ https://letsencrypt.org/
 
 maybe get steam info from discord, how does pingbot do it.
 ill just do it my own way
+
+[twitch sub types](https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#subscription-types)
+[manage subs](https://dev.twitch.tv/docs/eventsub/manage-subscriptions/)
+
+should close port, but dont need to. later close and use docker port

@@ -1,6 +1,6 @@
 FROM python:alpine
 
-RUN pip install flask requests
+RUN pip install flask requests waitress
 
 ADD src /src
 

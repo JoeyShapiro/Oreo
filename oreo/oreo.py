@@ -86,6 +86,10 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     return { 'id': results[0][0] }
 
 if __name__ == "__main__":
-    # context = ('server.crt', 'server.key')
-    # app.run(debug=True, host="0.0.0.0", port=443, ssl_context=context)
-    app.run(debug=True, host="0.0.0.0", port=8080)
+    # simple use, check if it should be running in debug mode
+    if len(sys.argv) == 1:
+        app.run(debug=True, host="0.0.0.0", port=8080)
+    else:
+        from waitress import serve
+        context = (f'{sys.argv[1]}/server.crt', f'{sys.argv[1]}/server.key')
+        serve(app, host="0.0.0.0", port=8080, ssl_context=context)
