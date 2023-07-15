@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 from twitch import hook_channel as twitch_hook_channel
 from webhooks import stream_up
 import sys
@@ -21,6 +21,10 @@ def index():
 @app.route("/oreo/eventstreamup", methods=['POST'])
 def event_streamup():
     data = request.json # type: ignore
+
+    # fixes an annoying linting null check error
+    if data == None:
+        data = {}
 
     # run this in its own thread
     # must pass a deep clone to the process
@@ -45,6 +49,19 @@ def event_streamdown():
     data = request.json # type: ignore
     print(data, file=sys.stdout)
     return '{"msg": "tysm"}'
+
+@app.route("/oreo/eventsub", methods=['POST'])
+def event_sub():
+    data = request.json # type: ignore
+    print(data, file=sys.stdout)
+    # fixes an annoying linting null check error
+    if data == None:
+        data = {}
+
+    resp = make_response(data['challenge'])
+    resp.headers['Content-Type'] = 'text/plain'
+
+    return resp
 
 def watch_channel(username: str, platform: str, message: str, creator: str):
     """
@@ -86,6 +103,11 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     return { 'id': results[0][0] }
 
 if __name__ == "__main__":
+    # watch_channel("yoeyshapiro", "twitch", "{channel} is prolly doing some nerdy stuff on {game} right now. {title} ...i was right. Go check them out at {link}", "yoeyshapiro")
+    
+    # from twitch import get_subs, get_auth
+    # auth = get_auth(secrets['twitch']['client_id'], secrets['twitch']['client_secret'])
+    # print(get_subs(auth['access_token'], secrets['twitch']['client_id']))
     
     # simple use, check if it should be running in debug mode
     # using secrets.json is better
