@@ -11,7 +11,7 @@ CALLBACK = "https://thegreenhouse.dev/oreo"
 
 app = Flask(__name__)
 secrets = {}
-with open('secrets.json') as f:
+with open('/mnt/data/secrets.json') as f:
     secrets = json.load(f)
 
 @app.route("/")
