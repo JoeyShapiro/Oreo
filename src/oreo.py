@@ -52,6 +52,7 @@ def event_streamdown():
     print(data, file=log_file)
     return '{"msg": "tysm"}'
 
+# TODO this should go in each call function, and have a special case... gross...
 @app.route("/oreo/eventsub", methods=['POST'])
 def event_sub():
     data = request.json # type: ignore
