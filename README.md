@@ -50,3 +50,6 @@ ill just do it my own way
 should close port, but dont need to. later close and use docker port
 
 im still not happy with the secrets importing layout. maybe ask around
+
+using ngrok works. binding ngrok to 443 causes ssl errors, i guess 443 is NATIVE ssl
+any other port fails, but 8080

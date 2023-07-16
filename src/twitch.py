@@ -72,7 +72,7 @@ def event_sub(callback, secrets, broadcaster_id):
         },
         "transport": {
             "method": "webhook",
-            "callback": callback,
+            "callback": f'{callback}/eventsub',
             "secret": secrets['twitch']['client_secret']
         }
     }
@@ -99,4 +99,20 @@ def hook_channel(callback: str, username: str, secrets):
     # TODO check if failure 'data.0.status'
     print(data)
 
-    return { 'id': data['data'][0]['id'] } or data
+    return { 'id': data['data'][0]['id'] } if 'data' in data else data
+
+def remove_hook(hook_id: str, secrets):
+    """
+    remove a webhook from twitch.tv given the hook id.
+    """
+
+    auth = get_auth(secrets['twitch']['client_id'], secrets['twitch']['client_secret'])
+
+    headers = {
+        'Client-ID': secrets['twitch']['client_id'],
+        'Authorization': f'Bearer {auth["access_token"]}'
+    }
+
+    response = requests.delete(f'https://api.twitch.tv/helix/eventsub/subscriptions?id={hook_id}', headers=headers)
+
+    return response.content

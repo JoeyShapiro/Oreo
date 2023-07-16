@@ -17,6 +17,7 @@ with open('../data/secrets.json') as f:
 
 @app.route("/")
 def index():
+    print(request.json, file=log_file)
     return render_template("index.html")
 
 @app.route("/oreo/eventstreamup", methods=['POST'])
@@ -58,7 +59,6 @@ def event_sub():
     if data == None:
         data = {}
 
-    print(f'got event sub request {data}', file=log_file)
     resp = make_response(data['challenge'])
     resp.headers['Content-Type'] = 'text/plain'
 
@@ -86,7 +86,7 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
         return { 'error': f'platform {platform} not supported' }
     
     # check if it worked
-    if result['id'] is None:
+    if 'id' not in result:
         print(result, file=log_file)
         return { 'error': 'failed to create webhook' }
     
@@ -107,12 +107,6 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     return { 'id': results[0][0] }
 
 if __name__ == "__main__":
-    # watch_channel("yoeyshapiro", "twitch", "{channel} is prolly doing some nerdy stuff on {game} right now. {title} ...i was right. Go check them out at {link}", "yoeyshapiro")
-
-    from twitch import get_subs, get_auth
-    auth = get_auth(secrets['twitch']['client_id'], secrets['twitch']['client_secret'])
-    print(get_subs(auth['access_token'], secrets['twitch']['client_id']))
-
     # simple use, check if it should be running in debug mode
     # using secrets.json is better
     if sys.argv[1] == "ssl":
