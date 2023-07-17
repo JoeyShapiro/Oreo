@@ -57,6 +57,7 @@ def event_streamdown():
     print(data, file=log_file)
     return '{"msg": "tysm"}'
 
+# TODO maybe this should also add to database, or verify it
 def event_sub(data):
     resp = make_response('')
     resp.headers['Content-Type'] = 'text/plain'
@@ -73,6 +74,7 @@ def event_sub(data):
     return resp
 
 # TODO move this to another areal. or move api stuff to app.py
+# TODO this also needs the hook id, for verification
 def watch_channel(username: str, platform: str, message: str, creator: str):
     """
     Will create a webhook for the channel as long as it is supported.
