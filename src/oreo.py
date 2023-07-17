@@ -30,7 +30,8 @@ def event_streamup():
 
     # if they send a challenge, has to respond with a challenge
     if request.headers.get('Twitch-Eventsub-Message-Type') == 'webhook_callback_verification':
-        return event_sub(data)
+        resp = event_sub(data)
+        return resp
 
     # run this in its own thread
     # must pass a deep clone to the process
