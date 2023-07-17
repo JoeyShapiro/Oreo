@@ -28,6 +28,10 @@ def event_streamup():
     if data == None:
         data = {}
 
+    # if they send a challenge, has to respond with a challenge
+    if request.headers.get('Twitch-Eventsub-Message-Type') == 'webhook_callback_verification':
+        return event_sub(data)
+
     # run this in its own thread
     # must pass a deep clone to the process
     process = multiprocessing.Process(target=do_streamup, args=(dict(data),))
@@ -52,16 +56,16 @@ def event_streamdown():
     print(data, file=log_file)
     return '{"msg": "tysm"}'
 
-# TODO this should go in each call function, and have a special case... gross...
-@app.route("/oreo/eventsub", methods=['POST'])
-def event_sub():
-    data = request.json # type: ignore
-    # fixes an annoying linting null check error
-    if data == None:
-        data = {}
-
-    resp = make_response(data['challenge'])
+def event_sub(data):
+    resp = make_response('')
     resp.headers['Content-Type'] = 'text/plain'
+
+    # check if i asked for the hook
+    if False:
+        resp.response - 'unrequested hook'
+        resp.status_code = 400
+    else:
+        resp.response = data['challenge']
 
     print(f'responding to challenge {data}', file=log_file)
 
@@ -78,7 +82,7 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     # do the proper platform specific webhook creation
     platform_id = -1
     if platform == "twitch":
-        result = twitch_hook_channel(CALLBACK, username, secrets)
+        result = twitch_hook_channel(f'{CALLBACK}/streamup', username, secrets)
         platform_id = 2
     elif platform == "youtube":
         platform_id = 1

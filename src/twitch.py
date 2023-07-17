@@ -49,7 +49,7 @@ def get_subs(bearer_token: str, client_id: str):
     res = requests.get(url, headers=headers)
     return res.json()
 
-def event_sub(callback, secrets, broadcaster_id):
+def sub_online(callback, secrets, broadcaster_id):
     """
     Subscribe to an api webhook from twitch api
     """
@@ -72,7 +72,7 @@ def event_sub(callback, secrets, broadcaster_id):
         },
         "transport": {
             "method": "webhook",
-            "callback": f'{callback}/eventsub',
+            "callback": f'{callback}',
             "secret": secrets['twitch']['client_secret']
         }
     }
@@ -94,7 +94,7 @@ def hook_channel(callback: str, username: str, secrets):
     if broadcaster_id is None:
         return { 'error': 'invalid username' }
 
-    data = event_sub(callback, secrets, broadcaster_id)
+    data = sub_online(callback, secrets, broadcaster_id)
 
     # TODO check if failure 'data.0.status'
     print(data)
