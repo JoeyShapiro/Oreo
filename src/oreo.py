@@ -82,7 +82,7 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     # do the proper platform specific webhook creation
     platform_id = -1
     if platform == "twitch":
-        result = twitch_hook_channel(f'{CALLBACK}/streamup', username, secrets)
+        result = twitch_hook_channel(f'{CALLBACK}/eventstreamup', username, secrets)
         platform_id = 2
     elif platform == "youtube":
         platform_id = 1

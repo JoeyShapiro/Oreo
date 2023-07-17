@@ -21,7 +21,7 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     # do the proper platform specific webhook creation
     platform_id = -1
     if platform == "twitch":
-        result = twitch_hook_channel(f'{CALLBACK}/streamup', username, secrets)
+        result = twitch_hook_channel(f'{CALLBACK}/eventstreamup', username, secrets)
         platform_id = 2
     elif platform == "youtube":
         platform_id = 1
@@ -36,7 +36,7 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
 
     return { 'id': -1 }
 
-watch_channel("yoeyshapiro", "twitch", "{channel} is prolly doing some nerdy stuff on {game} right now. {title} ...i was right. Go check them out at {link}", "yoeyshapiro")
+# watch_channel("yoeyshapiro", "twitch", "{channel} is prolly doing some nerdy stuff on {game} right now. {title} ...i was right. Go check them out at {link}", "yoeyshapiro")
 
 from twitch import get_subs, get_auth
 auth = get_auth(secrets['twitch']['client_id'], secrets['twitch']['client_secret'])
