@@ -63,10 +63,10 @@ def event_sub(data):
 
     # check if i asked for the hook
     if False:
-        resp.response - 'unrequested hook'
+        resp.data = 'unrequested hook'
         resp.status_code = 400
     else:
-        resp.response = data['challenge']
+        resp.data = data['challenge']
 
     print(f'responding to challenge {data}', file=log_file)
 
