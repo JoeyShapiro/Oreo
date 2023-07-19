@@ -62,8 +62,17 @@ def event_sub(data):
     resp = make_response('')
     resp.headers['Content-Type'] = 'text/plain'
 
+    # check the database for the id
+    conn = sqlite3.connect('oreo.sqlite')
+    cur = conn.cursor()
+    # seems good idea
+    cur.execute('SELECT COUNT(*) as count FROM hooks WHERE uuid = ?', (data['challenge'],))
+    results = cur.fetchall()
+
+    conn.close()
+
     # check if i asked for the hook
-    if False:
+    if results[0][0] == 0:
         resp.data = 'unrequested hook'
         resp.status_code = 400
     else:
@@ -102,8 +111,8 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
     conn = sqlite3.connect('oreo.sqlite')
 
     cur = conn.cursor()
-    cur.execute('INSERT INTO hooks (channel, platform_id, message, creator) VALUES (?, ?, ?, ?) RETURNING id',
-                (username, platform_id, message, creator)
+    cur.execute('INSERT INTO hooks (channel, platform_id, message, creator, uuid) VALUES (?, ?, ?, ?, ?) RETURNING id',
+                (username, platform_id, message, creator, result['id'])
     )
 
     results = cur.fetchall()
