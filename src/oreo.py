@@ -123,6 +123,24 @@ def watch_channel(username: str, platform: str, message: str, creator: str):
 
     return { 'id': results[0][0] }
 
+@app.route("/oreo/watch", methods=['POST'])
+def watch():
+    data = request.json # type: ignore
+
+    # fixes an annoying linting null check error
+    if data == None:
+        data = {}
+    
+    # check if allowed access
+    if 'api-key' not in data or data['api-key'] != secrets['api-key']:
+        return { 'error': 'invalid api key' }
+
+    # check for required fields
+    if 'username' not in data or 'platform' not in data or 'message' not in data or 'creator' not in data:
+        return { 'error': 'missing required fields', 'fields': [ 'username', 'platform', 'message', 'creator' ] }
+
+    return watch_channel(data['username'], data['platform'], data['message'], data['creator'])
+
 if __name__ == "__main__":
     # simple use, check if it should be running in debug mode
     # using secrets.json is better
