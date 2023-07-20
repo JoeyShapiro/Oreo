@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green House</title>
+</head>
+
+<script>
+    // window.onbeforeunload = function() {
+    //     return "NOOO DONT GO D:"
+    // };
+    var addEvent = function (obj, evt, fn) {
+        if (obj.addEventListener) {
+            obj.addEventListener(evt, fn, false);
+        }
+        else if (obj.attachEvent) {
+            obj.attachEvent("on" + evt, fn);
+        }
+    };
+
+    // when they leave the page
+    addEvent(document, "mouseout", function (event) {
+        event = event ? event : window.event;
+        var from = event.relatedTarget || event.toElement;
+        if ((!from || from.nodeName == "HTML") && event.clientY <= 0) {
+            document.getElementById("hello").style.display = "none";
+            document.getElementById("goodbye").style.display = "flex";
+        }
+    });
+
+    // when they come back
+    addEvent(document, "mouseover", function (event) {
+        event = event ? event : window.event;
+        if (event.clientY >= 0) {
+            document.getElementById("hello").style.display = "block";
+            document.getElementById("goodbye").style.display = "none";
+        }
+    });
+</script>
+
+<style>
+    #goodbye {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 100vh;
+        font-size: xx-large;
+        margin: 0;
+        position: absolute;
+        min-width: 100%;
+
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+
+        background: linear-gradient(141deg, #ff000000, #dd000000, #aa0000);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .wavy {
+        position: relative;
+    }
+
+    .wavy span {
+        position: relative;
+        display: inline-block;
+        color: #000;
+        font-size: 2em;
+        text-transform: uppercase;
+        animation: wave 0.5s ease-in-out infinite;
+        animation-delay: calc(0.1s * var(--i));
+    }
+
+    @keyframes wave {
+        0% {
+            transform: translateY(0px);
+        }
+
+        33% {
+            transform: translateY(-20px);
+        }
+
+        66% {
+            transform: translateY(0px);
+        }
+
+        100% {
+            transform: translateY(20px);
+        }
+    }
+
+    .terminal {
+        background-color: #000;
+        color: #fff;
+        font-family: monospace;
+        font-size: larger;
+        min-height: 25%;
+        min-width: 100%;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+    }
+</style>
+
+<body>
+    <!-- could also use some thing about checking mouse position -->
+    <div id="hello">
+        <h1>Welcome to my website :D</h1>
+        <h2>I use SSL and other stuff</h2>
+        <div class="terminal">
+            $ ls
+        </div>
+    </div>
+    <div id="goodbye">
+        <div class="wavy">
+            <span style="--i:1">N</span>
+            <span style="--i:2">O</span>
+            <span style="--i:3"></span>
+            <span style="--i:4">D</span>
+            <span style="--i:5">O</span>
+            <span style="--i:6">N</span>
+            <span style="--i:7">T</span>
+            <span style="--i:8"> </span>
+            <span style="--i:9">G</span>
+            <span style="--i:10">O</span>
+            <span style="--i:11"> </span>
+            <span style="--i:12">D:</span>
+        </div>
+        <p>I can do other things too</p>
+    </div>
+</body>
+
+</html>
