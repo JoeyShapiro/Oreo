@@ -53,3 +53,9 @@ im still not happy with the secrets importing layout. maybe ask around
 
 using ngrok works. binding ngrok to 443 causes ssl errors, i guess 443 is NATIVE ssl
 any other port fails, but 8080
+
+
+found the youtube webhook, but its was buried and called api. also can prolly use api to create hook
+maybe can get other types of stuff, but only seems to be videos rightn now
+also need to post on game change for twitch
+and @ users if they are "subbed"
