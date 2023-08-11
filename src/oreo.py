@@ -40,9 +40,25 @@ def event_streamup():
 
     return '{"msg": "tysm"}'
 
+def get_followers(subscription_id: int) -> list[str]:
+    """
+    returns a list of all users who are following the webhook
+    """
+
+    conn = sqlite3.connect('oreo.sqlite')
+    cur = conn.cursor()
+
+    cur.execute(f'SELECT username FROM followers WHERE hook_id = {subscription_id}')
+    results = cur.fetchall()
+    conn.close()
+    
+    return [row[0] for row in results]
+
 # actually do the stuff
 def do_streamup(data):
-    msg = stream_up(data, secrets)
+    msg, id = stream_up(data, secrets)
+    msg += '\nfollowers:\n\t@' # cant contain \t
+    msg += '\n\t@'.join(get_followers(id)) # combine into a nice list
 
     discord_message = {
         "content": msg

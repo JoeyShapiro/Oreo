@@ -6,6 +6,7 @@ create table hooks
         unique,
     channel     varchar(256)                          not null,
     platform_id integer                               not null,
+    hook_type   varchar(64)                           not null,
     message     varchar(2048)                         not null,
     creator     varchar(128),
     created     datetime    default CURRENT_TIMESTAMP not null,
@@ -28,6 +29,5 @@ create table followers
         primary key autoincrement
         unique,
     username    varchar(128) not null,
-    platform_id integer      not null,
     hook_id     integer      not null -- this lets someone choose what they want to know, rather than channel name
 );

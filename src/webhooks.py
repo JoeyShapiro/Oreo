@@ -14,7 +14,7 @@ def stream_up(data, secrets) -> str:
     cur = conn.cursor()
 
     cur.execute(f'''
-        SELECT channel, message, p.name FROM hooks
+        SELECT hooks.id, channel, message, p.name FROM hooks
             INNER JOIN platforms p on hooks.platform_id = p.id 
             WHERE channel = "{channel}" AND platform_id = 2
     ''') # do i need the name, i know the platform anyway from the call. for later function collection stuff
@@ -24,9 +24,11 @@ def stream_up(data, secrets) -> str:
 
     # send it to each subscription with the proper message
     msg = ""
+    id = 0 # should use id and not uuid because uuid would, i think, return every user on every discord to the list
     for row in results:
-        msg = row[1]
-        msg = msg.replace('{channel}', row[0]).replace('{platform}', row[2])
+        id = row[0]
+        msg = row[2]
+        msg = msg.replace('{channel}', row[1]).replace('{platform}', row[3])
         msg = msg.replace('{link}', f'https://twitch.tv/{channel}')
         msg = msg.replace('{title}', details['title'])
         msg = msg.replace('{game}', details['game_name']) # maybe change to category        
@@ -34,4 +36,5 @@ def stream_up(data, secrets) -> str:
     # close the connection
     conn.close()
 
-    return msg
+    # TODO this only returns the first one, maybe i should do a loop
+    return msg, id
