@@ -59,3 +59,8 @@ found the youtube webhook, but its was buried and called api. also can prolly us
 maybe can get other types of stuff, but only seems to be videos rightn now
 also need to post on game change for twitch
 and @ users if they are "subbed"
+
+stream up now shows the followers
+but i realized that it only works with one server, which is fine, but still
+want to make it actually use the list, would need to rebuild
+for now it just returns the first id, like how msg works so whatever
