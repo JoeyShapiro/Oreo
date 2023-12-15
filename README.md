@@ -64,3 +64,5 @@ stream up now shows the followers
 but i realized that it only works with one server, which is fine, but still
 want to make it actually use the list, would need to rebuild
 for now it just returns the first id, like how msg works so whatever
+
+now need to add discord stuff
